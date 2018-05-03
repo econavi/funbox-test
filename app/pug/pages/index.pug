@@ -1,0 +1,40 @@
+extends ../templates/default/template.pug
+
+block head
+	- var path = '';
+	- var pageTitle = 'Тестовое задание FunBox';
+	- var pageDescription = 'Тестовое задание на позицию верстальщика';
+
+block content
+	main.page-main
+		
+
+		.product-list.js-product-list
+			
+			.product-list__item.product.js-product
+				label.product__card.js-product-card
+					input(type='checkbox').js-product-checkbox
+					.product__content
+				.product__description
+					p(style='color: #fff') Описание товара
+						span(style='color: #fff').product__buy-btn.js-product-btn Купить
+
+			.product-list__item.product.js-product
+				label.product__card.js-product-card
+					input(type='checkbox').js-product-checkbox
+					.product__content
+				.product__description
+					p(style='color: #fff') Описание товара
+						span(style='color: #fff').product__buy-btn.js-product-btn Купить
+
+			.product-list__item.product.js-product
+				label.product__card.js-product-card
+					input(type='checkbox' disabled).js-product-checkbox
+					.product__content
+				.product__description
+					p(style='color: #fff') Описание товара
+						span(style='color: #fff').product__buy-btn.js-product-btn Купить
+
+
+
+		
