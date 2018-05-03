@@ -1,0 +1,51 @@
+.product
+	padding 20px 20px
+	x(yellow)
+	
+	&__card
+		position relative
+		
+		& input[type='checkbox']
+			display none
+	
+	&__buy-btn
+		color #fff
+		cursor pointer
+	
+	&__content
+		height 100px
+		background blue
+		
+		&:hover
+			background pink
+
+
+	// если чекбокс disabled
+	&__card input[type='checkbox']:disabled ~ &__content
+		background gray
+		
+		&:hover
+			background gray
+
+	// если чекбокс отмечен
+	&__card input[type='checkbox']:checked ~ &__content
+		background green
+	
+		&:hover
+			background pink
+
+	// пока курсор над карточкой товара, сразу после отметки чекбокса
+	&_is-activation input[type='checkbox']:checked ~ &__content
+		
+		&:hover
+			background green
+
+	// пока курсор над карточкой товара, сразу после снятия отметки чекбокса
+	&_is-deactivation input[type='checkbox'] ~ &__content
+		
+		&:hover
+			background blue
+			
+
+	
+		
