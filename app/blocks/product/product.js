@@ -1,5 +1,6 @@
 /*
-
+	************************************************************************
+	
 	Условия:
 	
 	Каждая из упаковок может быть выбрана. 
@@ -11,7 +12,9 @@
 	Состояние наведения применяется к выбранной упаковке не сразу, а после
 	того, как курсор ушел с нее после первоначального выбора.
 
-	Минимально необходимая HTML-разметка:
+	************************************************************************
+	
+	Минимально необходимая HTML-разметка для работы скрипта:
 
 	<div class='js-product-list'>
 		<div class='product js-product'>
@@ -30,47 +33,73 @@
 		</div>
 	</div>
 
-
+	************************************************************************
 */
 
 // debug, если true - выводит в консоль сообщения на каждом этапе обработки кода
 let debug = true;
+
+// объект для проверка мобильных устройств
+let isMobile = {
+    Android: function() {
+        return navigator.userAgent.match(/Android/i);
+    },
+    BlackBerry: function() {
+        return navigator.userAgent.match(/BlackBerry/i);
+    },
+    iOS: function() {
+        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
+    },
+    Opera: function() {
+        return navigator.userAgent.match(/Opera Mini/i);
+    },
+    Windows: function() {
+        return navigator.userAgent.match(/IEMobile/i);
+    },
+    any: function() {
+        return (isMobile.Android() || isMobile.BlackBerry() || isMobile.iOS() || isMobile.Opera() || isMobile.Windows());
+    }
+};
 
 // css-селекторы dom-элементов
 let classProductList = 'js-product-list';
 let classProduct = 'js-product';
 let classProductIsActivation = 'product_is-activation';
 let classProductIsDeactivation = 'product_is-deactivation';
+let classUsingTouchScreen = 'product_using-touch-screen';
 let classProductCard = 'js-product-card';
 let classButtonToBuy = 'js-product-btn';
 let classCheckbox = 'js-product-checkbox';
 
-// целевые элементы
+// css-селекторы целевых элементов
 let targetClasses = [classProductCard, classButtonToBuy];
 
-// родительский каталог
+// каталог всех элементов
 let productList = document.querySelector('.' + classProductList);
 
-// ждём мышь
+// проверяем использование мобильного устройства
+let touchScreenUsed = false;
+if(isMobile.any()) {
+	cl('Используется мобильное устройство')
+	touchScreenUsed = true;
+} 
+
+
+// устанавливаем обработчик
+
+// на клик
 productList.addEventListener('click', handler);
 
-// ждём клавиатуру
+// на клавишу "пробел"
 let keyboardIsUsed = false;
 productList.addEventListener('keydown', function(e) {
-	event.preventDefault();
 	if(e.keyCode == 32) {
 		keyboardIsUsed = true;
+		handler(e);
 	}
-	handler(e);
+	
 });
 
-// ждём touch screen
-let touchScreenUsed = false;
-productList.addEventListener('touchstart', function(e) {
-	event.preventDefault();
-	touchScreenUsed = true;
-	handler(e);
-});
 
 // обработчик
 function handler(event) {
@@ -105,10 +134,12 @@ function handler(event) {
 	let product = getElementByClassName(targetClickElement, this, classProduct);
 	cl('productItem получен:\n', product);
 
+	// если используется touch устройство, добавим класс на product
+	if(touchScreenUsed) { product.classList.add(classUsingTouchScreen) }
 
 	// получаем checkbox текущего product
 	let checkbox;
-	cl('Ищем Чекбокс.');
+	cl('Получаем Чекбокс.');
 	
 	// выберем всех потомков product
 	let childrenOfProduct = product.querySelectorAll('*');
@@ -179,7 +210,7 @@ function handler(event) {
 		// снимаем отметку с checkbox
 		cl('Снимаем отметку с Чекбокс');
 		checkbox.checked = false;
-		cl('Отметка снята');
+		cl('Сняли отметку\nОбработка завершена');
 
 		// если клик был сделан мышью
 		if(!keyboardIsUsed && !touchScreenUsed) {
