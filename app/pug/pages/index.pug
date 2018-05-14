@@ -6,35 +6,54 @@ block head
 	- var pageDescription = 'Тестовое задание на позицию верстальщика';
 
 block content
-	main.page-main
+	main.page-main.container
+		h1 Ты сегодня покормил кота?
 		
-
-		.product-list.js-product-list
+		section.product-list.js-product-list
 			
 			.product-list__item.product.js-product
-				label.product__card.js-product-card
+				label.product__card.js-product-card(tabindex='1')
 					input(type='checkbox').js-product-checkbox
-					.product__content
-				.product__description
-					p(style='color: #fff') Описание товара
-						span(style='color: #fff').product__buy-btn.js-product-btn Купить
+					.product__card-inner
+						.product__content.product-content-js
+							.product__legend Сказачное заморское яство
+							.product__title Нямушка
+							.product__subtitle с фуа-гра
+							ul.product__list
+								li 10 порций
+								li мышь в подарок
+							.product__weight-wrap
+								span.product__weight-value 0,5
+				p.product__description Чего сидишь? Порадуй котэ, <button class='product__buy-btn js-product-btn'>купи.</button>
 
 			.product-list__item.product.js-product
-				label.product__card.js-product-card
+				label.product__card.js-product-card(tabindex='2')
 					input(type='checkbox').js-product-checkbox
-					.product__content
-				.product__description
-					p(style='color: #fff') Описание товара
-						span(style='color: #fff').product__buy-btn.js-product-btn Купить
+					.product__card-inner
+						.product__content.product-content-js
+							.product__legend Сказачное заморское яство
+							.product__title Нямушка
+							.product__subtitle с рыбой
+							ul.product__list
+								li 40 порций
+								li 2 мыши в подарок
+							.product__weight-wrap
+								span.product__weight-value 2
+				p.product__description Головы щучьи с чесноком да свежайшая сёмгушка.
 
 			.product-list__item.product.js-product
-				label.product__card.js-product-card
+				label.product__card.js-product-card(tabindex='3')
 					input(type='checkbox' disabled).js-product-checkbox
-					.product__content
-				.product__description
-					p(style='color: #fff') Описание товара
-						span(style='color: #fff').product__buy-btn.js-product-btn Купить
+					.product__card-inner
+						.product__content.product-content-js
+							.product__legend Сказачное заморское яство
+							.product__title Нямушка
+							.product__subtitle с курой
+							ul.product__list
+								li 100 порций
+								li 5 мышей в подарок
+								li заказчик доволен
+							.product__weight-wrap
+								span.product__weight-value 5
+				p.product__description.product__description_disabled Печалька, с курой закончился 
 
-
-
-		

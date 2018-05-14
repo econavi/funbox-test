@@ -1,51 +1,225 @@
+$size-bevel-angle = 30px
+$size-border-radius-for-card = 10px
+
+$color-card-border = $blue
+$color-card-border-active = $pink
+$color-card-border-disabled = $gray
+$color-card-content-bg = $lightgray
+$color-card-text = $darkgray
+$color-card-title = $black
+$color-card-weight-value = $white
+$color-description = $white
+$color-description-disabled = $yellow
+
 .product
-	padding 20px 20px
-	x(yellow)
+	// Упаковка
+	&__card input[type='checkbox']
+		display none
 	
-	&__card
-		position relative
+
+	// Обёртка для бордюра
+	&__card-inner
+		padding 4px
 		
-		& input[type='checkbox']
-			display none
-	
-	&__buy-btn
-		color #fff
-		cursor pointer
-	
-	&__content
-		height 100px
-		background blue
+		border-radius $size-border-radius-for-card
+		background linear-gradient(135deg, transparent $size-bevel-angle, $color-card-border $size-bevel-angle)
 		
 		&:hover
-			background pink
-
+			background linear-gradient(135deg, transparent $size-bevel-angle, darken($color-card-border, 20%) $size-bevel-angle)
 
 	// если чекбокс disabled
-	&__card input[type='checkbox']:disabled ~ &__content
-		background gray
+	&__card input[type='checkbox']:disabled ~ &__card-inner
+		background linear-gradient(135deg, transparent $size-bevel-angle, $color-card-border-disabled $size-bevel-angle)
 		
 		&:hover
-			background gray
+			background linear-gradient(135deg, transparent $size-bevel-angle, $color-card-border-disabled $size-bevel-angle)
 
 	// если чекбокс отмечен
-	&__card input[type='checkbox']:checked ~ &__content
-		background green
+	&__card input[type='checkbox']:checked ~ &__card-inner
+		background linear-gradient(135deg, transparent $size-bevel-angle, $color-card-border-active $size-bevel-angle)
 	
 		&:hover
-			background pink
+			background linear-gradient(135deg, transparent $size-bevel-angle, lighten($color-card-border-active, 20%) $size-bevel-angle)
 
+	// переопределение нежелательных HOVER
 	// пока курсор над карточкой товара, сразу после отметки чекбокса
-	&_is-activation input[type='checkbox']:checked ~ &__content
+	&_is-activation input[type='checkbox']:checked ~ &__card-inner,
+	// или если используется touch устройство
+	&_using-touch-screen input[type='checkbox']:checked ~ &__card-inner
 		
 		&:hover
-			background green
+			background linear-gradient(135deg, transparent $size-bevel-angle, $color-card-border-active $size-bevel-angle)
 
 	// пока курсор над карточкой товара, сразу после снятия отметки чекбокса
-	&_is-deactivation input[type='checkbox'] ~ &__content
+	&_is-deactivation input[type='checkbox'] ~ &__card-inner,
+	// или если используется touch устройство
+	&_using-touch-screen input[type='checkbox'] ~ &__card-inner
 		
 		&:hover
-			background blue
-			
+			background linear-gradient(135deg, transparent $size-bevel-angle, $color-card-border $size-bevel-angle)
 
 	
+	// Контент упаковки
+	&__content
+		position relative
+
+		padding 20px 50px 300px
 		
+		color $color-card-text
+		border-radius $size-border-radius-for-card
+		background-size 130%
+		background url('../assets/img/general/product-bg.png') no-repeat center bottom -100px,
+			linear-gradient(135deg, transparent $size-bevel-angle, $color-card-content-bg $size-bevel-angle)
+		
+		cursor pointer
+	
+	// если чекбокс disabled
+	&__card input[type='checkbox']:disabled	~ &__card-inner &__content
+		cursor default
+
+		&:after
+				content ''
+				position absolute
+				top 0
+				right 0
+				bottom 0
+				left 0
+				border-radius $size-border-radius-for-card
+				background linear-gradient(135deg, transparent $size-bevel-angle, rgba(#fff, 0.8) $size-bevel-angle)
+				z-index 2
+	
+
+	// Элементы контента
+	&__legend
+		margin 0
+		padding 0
+		font-size 1.6rem
+		line-height 1.2
+	
+	&__title
+		margin 0
+		padding 0
+		font-size 4.8rem
+		line-height 1.2
+		color $color-card-title
+		
+	&__subtitle
+		margin 0
+		margin-bottom 20px
+		padding 0
+		font-size 2.4rem
+		line-height 1.2
+		color $color-card-title
+	
+	&__list
+		margin 0
+		padding 0
+		list-style none
+		font-size 1.4rem
+		line-height 1.15
+		
+
+	// Значок для веса упаковки
+	&__weight-wrap
+		position absolute
+		right 10px
+		bottom 10px
+		
+		display flex
+		justify-content center
+		align-items center
+		width 80px
+		height 80px
+		padding 4px
+
+		border-radius 50%
+		background $color-card-border
+	
+	// если чекбокс отмечен
+	&__card input[type='checkbox']:checked ~ &__card-inner &__content &__weight-wrap
+		background $color-card-border-active
+	
+	// если чекбокс disabled
+	&__card input[type='checkbox']:disabled ~ &__card-inner &__content &__weight-wrap
+		background darken($color-card-border-disabled, 100%)
+	
+	// hover
+	&__card-inner:hover &__weight-wrap
+		background darken($color-card-border, 20%)
+	
+	// hover если чекбокс отмечен
+	&__card input[type='checkbox']:checked ~ &__card-inner:hover &__content &__weight-wrap
+		background lighten($color-card-border-active, 20%)
+	
+	// пока курсор над карточкой товара, сразу после отметки чекбокса
+	&_is-activation input[type='checkbox']:checked ~ &__card-inner:hover &__content &__weight-wrap
+		background $color-card-border-active
+
+	// пока курсор над карточкой товара, сразу после снятия отметки чекбокса
+	&_is-deactivation input[type='checkbox'] ~ &__card-inner:hover &__content &__weight-wrap
+		background $color-card-border
+	
+
+	// Значение веса
+	&__weight-value
+		display flex
+		flex-direction column
+		align-items center
+		
+		font-size 3.3rem
+		line-height 1
+		
+		color $color-card-weight-value
+		
+		&:after
+			content 'кг'
+			fontFamily($font-second)
+			font-size 1.8rem
+			line-height 1
+	
+	
+	// Описание под упаковкой
+	&__description
+		margin 0
+		margin-top 10px
+		padding 0
+		
+		font-size 1.3rem
+		line-height 1.23
+		text-align center
+		
+		color $color-description
+		
+		&_disabled
+			color $color-description-disabled
+
+	
+	// Кнопка купить
+	&__buy-btn
+		position relative
+		
+		display inline-block
+		margin 0
+		padding 0
+		
+		font-size inherit
+		line-height inherit
+		
+		border none
+		background none
+		color $color-card-border
+		
+		cursor pointer
+		
+		&:before
+			content ''
+			position absolute
+			bottom 0
+			left 1px
+			right 4px
+			
+			height 0
+			
+			border-bottom 1px dashed $color-card-border
+
+
